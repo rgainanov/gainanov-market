@@ -21,7 +21,7 @@ public class Cart {
         return Collections.unmodifiableList(items);
     }
 
-    public void add(Product product) {
+    public void addProduct(Product product) {
         boolean itemExisted = false;
         for (int i = 0; i < items.size(); i++) {
             CartItem existingItem = items.get(i);
@@ -39,23 +39,40 @@ public class Cart {
         recalculate();
     }
 
-    public void remove(Product product) {
+    public void removeProduct(Product product) {
         for (int i = 0; i < items.size(); i++) {
             CartItem existingItem = items.get(i);
             if (existingItem.getProductId().equals(product.getId()) && existingItem.getQuantity() > 1) {
                 existingItem.setQuantity(existingItem.getQuantity() - 1);
                 existingItem.setPrice(existingItem.getPrice() - product.getPrice());
-            } else {
+            } else if (existingItem.getProductId().equals(product.getId())) {
                 items.remove(i);
             }
         }
         recalculate();
     }
 
+    public void removeAll() {
+        items.clear();
+        recalculate();
+    }
+
+    public void removeLine(Product product) {
+        for (int i = 0; i < items.size(); i++) {
+            CartItem existingItem = items.get(i);
+            if (existingItem.getProductId().equals(product.getId())) {
+                items.remove(i);
+            }
+        }
+        recalculate();
+    }
+
+
     private void recalculate() {
         totalPrice = 0;
         for (CartItem i : items) {
             totalPrice += i.getPrice();
+
         }
     }
 }

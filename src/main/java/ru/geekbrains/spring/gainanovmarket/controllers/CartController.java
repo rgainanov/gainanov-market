@@ -19,14 +19,23 @@ public class CartController {
         return cartService.getCurrentCart();
     }
 
-    @GetMapping("add/{id}")
-    public void add(@PathVariable Long id) {
-        cartService.add(id);
+    @GetMapping("addProduct/{id}")
+    public void addProduct(@PathVariable Long id) {
+        cartService.addProduct(id);
     }
 
-    @GetMapping("remove/{id}")
-    public void remove(@PathVariable Long id) {
-        cartService.remove(id);
+    @GetMapping("removeProduct/{id}")
+    public void removeProduct(@PathVariable Long id) {
+        cartService.removeProduct(id);
     }
 
+    @GetMapping("clearCart")
+    public void clearCart() {
+        cartService.removeAll();
+    }
+
+    @GetMapping("removeLine/{id}")
+    public void removeLine(@PathVariable Long id) {
+        cartService.removeLine(id);
+    }
 }

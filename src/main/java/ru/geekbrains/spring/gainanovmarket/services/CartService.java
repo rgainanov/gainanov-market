@@ -23,14 +23,23 @@ public class CartService {
         return tempCart;
     }
 
-    public void add(Long productId) {
+    public void addProduct(Long productId) {
         Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Can't add this product to Cart. No such product"));
-        tempCart.add(product);
+        tempCart.addProduct(product);
     }
 
-    public void remove(Long productId) {
-        Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Can't add this product to Cart. No such product"));
-        tempCart.remove(product);
+    public void removeProduct(Long productId) {
+        Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Can't remove this product from Cart. No such product"));
+        tempCart.removeProduct(product);
+    }
+
+    public void removeAll() {
+        tempCart.removeAll();
+    }
+
+    public void removeLine(Long productId) {
+        Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Can't remove this product line from Cart. No such product"));
+        tempCart.removeLine(product);
     }
 
 }
