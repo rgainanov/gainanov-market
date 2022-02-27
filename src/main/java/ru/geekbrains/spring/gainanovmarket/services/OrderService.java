@@ -1,6 +1,7 @@
 package ru.geekbrains.spring.gainanovmarket.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.gainanovmarket.dtos.OrderDto;
 import ru.geekbrains.spring.gainanovmarket.entities.Order;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class OrderService {
     private final CartService cartService;
@@ -48,7 +50,6 @@ public class OrderService {
 
     public List<OrderDto> findAllByUser(User user) {
         List<OrderDto> orderDtoList = new ArrayList<>();
-        System.out.println(orderRepository.findAllByUser(user));
 //                orderRepository.findAllByUser(user).stream().map(OrderDto::new).collect(Collectors.toList());
         return orderDtoList;
     }
