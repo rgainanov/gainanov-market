@@ -2,7 +2,7 @@ package ru.geekbrains.spring.gainanovmarket.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.spring.gainanovmarket.dtos.Cart;
+import ru.geekbrains.spring.gainanovmarket.model.Cart;
 import ru.geekbrains.spring.gainanovmarket.entities.Product;
 import ru.geekbrains.spring.gainanovmarket.exceptions.ResourceNotFoundException;
 
@@ -38,8 +38,7 @@ public class CartService {
     }
 
     public void removeLine(Long productId) {
-        Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Can't remove this product line from Cart. No such product"));
-        tempCart.removeLine(product);
+        tempCart.removeLine(productId);
     }
 
 }

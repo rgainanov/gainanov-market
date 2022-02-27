@@ -1,6 +1,7 @@
 package ru.geekbrains.spring.gainanovmarket.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,11 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.spring.gainanovmarket.dtos.JwtRequest;
 import ru.geekbrains.spring.gainanovmarket.dtos.JwtResponse;
+import ru.geekbrains.spring.gainanovmarket.dtos.StringResponse;
 import ru.geekbrains.spring.gainanovmarket.services.UserService;
 import ru.geekbrains.spring.gainanovmarket.utils.JwtTokenUtil;
 
+import java.security.Principal;
+
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;
@@ -39,5 +44,10 @@ public class AuthController {
     @GetMapping("/secured")
     public String helloSecurity() {
         return "Hello";
+    }
+
+    @GetMapping("/auth_check")
+    public StringResponse authCheck(Principal principal) {
+        return new StringResponse(principal.getName());
     }
 }

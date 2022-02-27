@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.geekbrains.spring.gainanovmarket.dtos.Cart;
+import ru.geekbrains.spring.gainanovmarket.model.Cart;
 import ru.geekbrains.spring.gainanovmarket.services.CartService;
 
 @RestController
@@ -19,22 +19,22 @@ public class CartController {
         return cartService.getCurrentCart();
     }
 
-    @GetMapping("addProduct/{id}")
+    @GetMapping("add/{id}")
     public void addProduct(@PathVariable Long id) {
         cartService.addProduct(id);
     }
 
-    @GetMapping("removeProduct/{id}")
+    @GetMapping("decrease/{id}")
     public void removeProduct(@PathVariable Long id) {
         cartService.removeProduct(id);
     }
 
-    @GetMapping("clearCart")
+    @GetMapping("clear")
     public void clearCart() {
         cartService.removeAll();
     }
 
-    @GetMapping("removeLine/{id}")
+    @GetMapping("remove-line/{id}")
     public void removeLine(@PathVariable Long id) {
         cartService.removeLine(id);
     }
