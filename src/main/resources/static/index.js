@@ -42,7 +42,15 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     $scope.createOrder = function () {
         $http.post('http://localhost:8189/market/api/v1/orders', $scope.order)
             .then(function (response) {
-                console.log(response)
+                $scope.getUserOrders();
+            });
+
+    }
+
+    $scope.getUserOrders = function () {
+        $http.get('http://localhost:8189/market/api/v1/orders/')
+            .then(function (response) {
+                console.log(response);
             });
     }
 
@@ -114,4 +122,5 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
 
     $scope.loadProducts();
     $scope.loadCart();
+
 });
