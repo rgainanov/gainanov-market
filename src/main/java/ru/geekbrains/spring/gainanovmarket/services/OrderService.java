@@ -48,7 +48,7 @@ public class OrderService {
         orderItemRepository.saveAllAndFlush(orderItemList);
     }
 
-    public List<OrderDto> findAllByUser(User user) {
+    public List<OrderDto> findAllOrdersByUser(User user) { //TODO доделать логику
         List<OrderDto> orderDtoList = new ArrayList<>();
 //                orderRepository.findAllByUser(user).stream().map(OrderDto::new).collect(Collectors.toList());
         return orderDtoList;

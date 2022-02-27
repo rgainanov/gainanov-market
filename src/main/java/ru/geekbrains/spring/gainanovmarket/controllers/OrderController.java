@@ -32,6 +32,6 @@ public class OrderController {
     public List<OrderDto> getOrders(Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(
                 () -> new ResourceNotFoundException("User with name: " + principal.getName() + " not found."));
-        return orderService.findAllByUser(user);
+        return orderService.findAllOrdersByUser(user);
     }
 }
