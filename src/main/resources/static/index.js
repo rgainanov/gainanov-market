@@ -50,7 +50,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     $scope.getUserOrders = function () {
         $http.get('http://localhost:8189/market/api/v1/orders/')
             .then(function (response) {
-                console.log(response);
+                $scope.userOrders = response.data
             });
     }
 

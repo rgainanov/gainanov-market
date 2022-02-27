@@ -3,6 +3,7 @@ package ru.geekbrains.spring.gainanovmarket.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.spring.gainanovmarket.converters.OrderConverter;
 import ru.geekbrains.spring.gainanovmarket.dtos.OrderDto;
 import ru.geekbrains.spring.gainanovmarket.entities.Order;
 import ru.geekbrains.spring.gainanovmarket.entities.OrderItem;
@@ -25,6 +26,7 @@ public class OrderService {
     private final ProductService productService;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final OrderConverter orderConverter;
 
     public void createOrder(User user, OrderData orderData) {
         Cart cart = cartService.getCurrentCart();
@@ -48,10 +50,8 @@ public class OrderService {
         orderItemRepository.saveAllAndFlush(orderItemList);
     }
 
-    public List<OrderDto> findAllOrdersByUser(User user) { //TODO доделать логику
-        List<OrderDto> orderDtoList = new ArrayList<>();
-//                orderRepository.findAllByUser(user).stream().map(OrderDto::new).collect(Collectors.toList());
-        return orderDtoList;
+    public List<OrderDto> findAllOrdersByUser(User user) {
+        return orderRepository.findAllByUser(user).stream().map(orderConverter::entityToDto).collect(Collectors.toList());
     }
 }
 
