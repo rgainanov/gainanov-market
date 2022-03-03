@@ -7,6 +7,7 @@ import ru.geekbrains.spring.gainanovmarket.entities.Category;
 import ru.geekbrains.spring.gainanovmarket.entities.Product;
 import ru.geekbrains.spring.gainanovmarket.exceptions.ResourceNotFoundException;
 import ru.geekbrains.spring.gainanovmarket.services.CategoryService;
+import ru.geekbrains.spring.gainanovmarket.soap.products.ProductWsDto;
 
 @Component
 @RequiredArgsConstructor
@@ -15,6 +16,15 @@ public class ProductConverter {
 
     public ProductDto entityToDto(Product p) {
         return new ProductDto(p.getId(), p.getTitle(), p.getPrice(), p.getCategory().getTitle());
+    }
+
+    public ProductWsDto entityToWs(Product p) {
+        ProductWsDto pWs = new ProductWsDto();
+        pWs.setId(p.getId());
+        pWs.setTitle(p.getTitle());
+        pWs.setPrice(p.getPrice());
+        pWs.setCategoryTitle(p.getCategory().getTitle());
+        return pWs;
     }
 
     public Product dtoToEntity(ProductDto productDto) {
@@ -29,4 +39,6 @@ public class ProductConverter {
         p.setCategory(c);
         return p;
     }
+
+
 }
