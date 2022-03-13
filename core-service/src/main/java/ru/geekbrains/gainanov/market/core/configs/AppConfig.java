@@ -1,4 +1,4 @@
-package ru.geekbrains.gainanov.market.carts.configs;
+package ru.geekbrains.gainanov.market.core.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -8,6 +8,7 @@ import ru.geekbrains.gainanov.market.api.CartDto;
 import ru.geekbrains.gainanov.market.api.OrderDto;
 import ru.geekbrains.gainanov.market.core.entities.Order;
 import ru.geekbrains.gainanov.market.core.entities.OrderItem;
+import ru.geekbrains.gainanov.market.core.integrations.CartServiceIntegration;
 import ru.geekbrains.gainanov.market.core.repositories.OrderRepository;
 import ru.geekbrains.gainanov.market.core.converters.OrderConverter;
 import ru.geekbrains.gainanov.market.core.entities.User;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class OrderService {
-    //    private final CartService cartService;
+    private final CartServiceIntegration cartServiceIntegration;
     private final ProductService productService;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
@@ -29,7 +30,7 @@ public class OrderService {
 
     @Transactional
     public void createOrder(User user, OrderData orderData) {
-        CartDto cartDto = null; //cartServiceIntegration.getCurrentCart();
+        CartDto cartDto = cartServiceIntegration.getCartDto();
 
         Order order = new Order();
         order.setUser(user);
@@ -47,7 +48,7 @@ public class OrderService {
         ).collect(Collectors.toList()));
         orderRepository.save(order);
 
-        //cartServiceIntegration.clear();
+        cartServiceIntegration.clearCart();
 
 //        Cart cart = cartService.getCurrentCart();
 //        Order order = new Order();
