@@ -9,6 +9,8 @@
         <module>core-service</module>
         <module>api</module>
         <module>frontend-service</module>
+        <module>gateway-service</module>
+        <module>auth-service</module>
     </modules>
 
 

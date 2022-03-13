@@ -25,12 +25,12 @@ public class CartService {
     }
 
     public void addProduct(Long productId) {
-        ProductDto product = productServiceIntegration.getProductById(productId).orElseThrow(() -> new ResourceNotFoundException("Can't add this product to Cart. No such product"));
+        ProductDto product = productServiceIntegration.getProductById(productId);
         tempCart.addProduct(product);
     }
 
     public void removeProduct(Long productId) {
-        ProductDto product = productServiceIntegration.getProductById(productId).orElseThrow(() -> new ResourceNotFoundException("Can't remove this product from Cart. No such product"));
+        ProductDto product = productServiceIntegration.getProductById(productId);
         tempCart.removeProduct(product);
     }
 
