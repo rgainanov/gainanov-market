@@ -43,6 +43,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         $http.post('http://localhost:8189/market/api/v1/orders', $scope.order)
             .then(function (response) {
                 $scope.getUserOrders();
+                $scope.loadCart();
             });
 
     }
