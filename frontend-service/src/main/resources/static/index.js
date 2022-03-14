@@ -73,7 +73,11 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     }
 
     $scope.loadProducts = function () {
-        $http.get('http://localhost:5555/core/api/v1/products').then(function (response) {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:5555/core/api/v1/products',
+            params: $scope.productsfilter
+        }).then(function (response) {
             $scope.productsList = response.data;
         });
     }
@@ -81,7 +85,6 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     $scope.showProductInfo = function (productId) {
         $http.get('http://localhost:5555/core/api/v1/products/' + productId).then(function (response) {
             alert(response.data.title);
-            console.log('test')
         });
     }
 

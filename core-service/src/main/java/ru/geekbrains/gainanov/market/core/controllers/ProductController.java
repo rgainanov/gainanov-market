@@ -1,13 +1,16 @@
 package ru.geekbrains.gainanov.market.core.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.gainanov.market.api.ProductDto;
 import ru.geekbrains.gainanov.market.api.ResourceNotFoundException;
 import ru.geekbrains.gainanov.market.core.converters.ProductConverter;
 import ru.geekbrains.gainanov.market.core.entities.Product;
+import ru.geekbrains.gainanov.market.core.repositories.specifications.ProductSpecifications;
 import ru.geekbrains.gainanov.market.core.services.ProductService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,8 +22,11 @@ public class ProductController {
     private final ProductConverter productConverter;
 
     @GetMapping
-    public List<ProductDto> findAll() {
-        return productService.findAll().stream().map(productConverter::entityToDto).collect(Collectors.toList());
+    public List<ProductDto> findAll(
+            @RequestParam MultiValueMap<String, String> params
+            ) {
+
+        return productService.findAll(ProductSpecifications.build(params)).stream().map(productConverter::entityToDto).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")

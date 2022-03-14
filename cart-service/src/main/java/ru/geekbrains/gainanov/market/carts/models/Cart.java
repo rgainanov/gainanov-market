@@ -5,6 +5,7 @@ import lombok.Data;
 import ru.geekbrains.gainanov.market.api.ProductDto;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @Data
 public class Cart {
     private List<CartItem> items;
-    private int totalPrice;
+    private BigDecimal totalPrice;
 
     public Cart() {
         this.items = new ArrayList<>();
@@ -39,7 +40,7 @@ public class Cart {
         for (CartItem ci : items) {
             if (ci.getProductId().equals(product.getId()) && ci.getQuantity() > 1) {
                 ci.setQuantity(ci.getQuantity() - 1);
-                ci.setPrice(ci.getPrice() - product.getPrice());
+                ci.setPrice(ci.getPrice().subtract(product.getPrice()));
                 recalculate();
                 return;
             }
@@ -61,9 +62,9 @@ public class Cart {
 
 
     private void recalculate() {
-        totalPrice = 0;
+        totalPrice = new BigDecimal(0);
         for (CartItem i : items) {
-            totalPrice += i.getPrice();
+            totalPrice = totalPrice.add(i.getPrice());
 
         }
     }

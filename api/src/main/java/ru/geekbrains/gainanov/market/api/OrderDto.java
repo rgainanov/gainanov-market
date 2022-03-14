@@ -1,16 +1,17 @@
 package ru.geekbrains.gainanov.market.api;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class OrderDto {
     private Long id;
     private List<OrderItemDto> items;
-    private int totalPrice;
+    private BigDecimal totalPrice;
 
     public OrderDto() {
     }
 
-    public OrderDto(Long id, List<OrderItemDto> items, int totalPrice) {
+    public OrderDto(Long id, List<OrderItemDto> items, BigDecimal totalPrice) {
         this.id = id;
         this.items = items;
         this.totalPrice = totalPrice;
@@ -32,11 +33,11 @@ public class OrderDto {
         this.items = items;
     }
 
-    public int getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

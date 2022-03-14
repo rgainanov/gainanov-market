@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.math.BigDecimal;
 
 
 /**
@@ -26,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}bigDecimal"/&gt;
  *         &lt;element name="categoryTitle" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -48,7 +49,7 @@ public class ProductWsDto {
     protected long id;
     @XmlElement(required = true)
     protected String title;
-    protected int price;
+    protected BigDecimal price;
     @XmlElement(required = true)
     protected String categoryTitle;
 
@@ -96,7 +97,7 @@ public class ProductWsDto {
      * Gets the value of the price property.
      * 
      */
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -104,7 +105,7 @@ public class ProductWsDto {
      * Sets the value of the price property.
      * 
      */
-    public void setPrice(int value) {
+    public void setPrice(BigDecimal value) {
         this.price = value;
     }
 
