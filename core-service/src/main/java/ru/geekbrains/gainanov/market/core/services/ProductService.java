@@ -2,6 +2,7 @@ package ru.geekbrains.gainanov.market.core.services;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.gainanov.market.api.ProductDto;
 import ru.geekbrains.gainanov.market.api.ResourceNotFoundException;
@@ -18,8 +19,8 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public List<Product> findAll(Specification<Product> spec) {
+        return productRepository.findAll(spec);
     }
 
     public Optional<Product> findById(Long id) {

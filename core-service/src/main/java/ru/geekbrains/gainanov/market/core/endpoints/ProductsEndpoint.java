@@ -55,11 +55,11 @@ public class ProductsEndpoint {
     public GetAllProductsResponse getAllProducts(@RequestPayload GetAllProductsRequest request) {
         GetAllProductsResponse response = new GetAllProductsResponse();
         System.out.println(request);
-        productService.findAll()
-                .stream()
-                .map(productConverter::entityToWs)
-                .collect(Collectors.toList())
-                .forEach(response.getProducts()::add);
+//        productService.findAll()
+//                .stream()
+//                .map(productConverter::entityToWs)
+//                .collect(Collectors.toList())
+//                .forEach(response.getProducts()::add);
         return response;
     }
 }
