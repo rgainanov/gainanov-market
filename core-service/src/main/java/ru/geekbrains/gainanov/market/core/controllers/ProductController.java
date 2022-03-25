@@ -10,7 +10,6 @@ import ru.geekbrains.gainanov.market.core.entities.Product;
 import ru.geekbrains.gainanov.market.core.repositories.specifications.ProductSpecifications;
 import ru.geekbrains.gainanov.market.core.services.ProductService;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +24,6 @@ public class ProductController {
     public List<ProductDto> findAll(
             @RequestParam MultiValueMap<String, String> params
             ) {
-
         return productService.findAll(ProductSpecifications.build(params)).stream().map(productConverter::entityToDto).collect(Collectors.toList());
     }
 

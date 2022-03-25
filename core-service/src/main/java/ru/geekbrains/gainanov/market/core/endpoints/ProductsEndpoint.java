@@ -12,8 +12,6 @@ import ru.geekbrains.gainanov.market.core.soap.products.GetAllProductsResponse;
 import ru.geekbrains.gainanov.market.core.soap.products.GetProductByIdRequest;
 import ru.geekbrains.gainanov.market.core.soap.products.GetProductByIdResponse;
 
-import java.util.stream.Collectors;
-
 @Endpoint
 @RequiredArgsConstructor
 public class ProductsEndpoint {
