@@ -28,7 +28,7 @@ public class OrderService {
     private final OrderConverter orderConverter;
 
     @Transactional
-    public void createOrder(String username, OrderData orderData) {
+    public Order createOrder(String username, OrderData orderData) {
         CartDto cartDto = cartServiceIntegration.getCartDto();
 
         Order order = new Order();
@@ -48,6 +48,7 @@ public class OrderService {
         orderRepository.save(order);
 
         cartServiceIntegration.clearCart();
+        return order;
     }
 
     public List<OrderDto> findAllOrdersByUser(String username) {
