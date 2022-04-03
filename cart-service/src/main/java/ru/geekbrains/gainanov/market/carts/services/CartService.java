@@ -7,10 +7,8 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.gainanov.market.api.ProductDto;
 import ru.geekbrains.gainanov.market.carts.integrations.ProductServiceIntegration;
 import ru.geekbrains.gainanov.market.carts.models.Cart;
+import ru.geekbrains.gainanov.market.carts.models.CartItem;
 
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Consumer;
 
 @Service
@@ -19,7 +17,7 @@ public class CartService {
     private final ProductServiceIntegration productServiceIntegration;
     private final RedisTemplate<String, Object> redisTemplate;
 
-    @Value("${cart-service.cart-prefix")
+    @Value("${cart-service.cart-prefix}")
     private String cartPrefix;
 
     public Cart getCurrentCart(String uuid) {
@@ -28,6 +26,18 @@ public class CartService {
             redisTemplate.opsForValue().set(targetUuid, new Cart());
         }
         return (Cart) redisTemplate.opsForValue().get(targetUuid);
+    }
+
+    public void mergeCarts(String username, String uuid) {
+        Cart userCart = getCurrentCart(username);
+        Cart unownedCart = getCurrentCart(uuid);
+
+        for (CartItem ci : unownedCart.getItems()) {
+            userCart.addCartItem(ci);
+        }
+
+        removeAll(uuid);
+        redisTemplate.opsForValue().set(cartPrefix + username, userCart);
     }
 
     public void addProduct(String uuid, Long productId) {

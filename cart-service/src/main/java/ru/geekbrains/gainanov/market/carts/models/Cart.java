@@ -7,7 +7,6 @@ import ru.geekbrains.gainanov.market.api.ProductDto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -20,10 +19,6 @@ public class Cart {
         this.items = new ArrayList<>();
     }
 
-//    public List<CartItem> getItems() {
-//        return Collections.unmodifiableList(items);
-//    }
-
     public void addProduct(ProductDto product) {
         for (CartItem ci : items) {
             if (ci.getProductId().equals(product.getId())) {
@@ -35,6 +30,11 @@ public class Cart {
         items.add(new CartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
         recalculate();
 
+    }
+
+    public void addCartItem(CartItem ci) {
+        items.add(ci);
+        recalculate();
     }
 
     public void removeProduct(ProductDto product) {
@@ -69,4 +69,5 @@ public class Cart {
 
         }
     }
+
 }

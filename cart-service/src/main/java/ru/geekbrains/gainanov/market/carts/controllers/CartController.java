@@ -28,6 +28,9 @@ public class CartController {
             @PathVariable String uuid
     ) {
         String targetUuid = getCartUuid(username, uuid);
+        if (username != null) {
+            cartService.mergeCarts(username, uuid);
+        }
         return cartConverter.entityToDto(cartService.getCurrentCart(targetUuid));
     }
 
