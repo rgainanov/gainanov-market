@@ -1,0 +1,29 @@
+<div>
+    <p></p>
+    <h3>Sign In</h3>
+    <p></p>
+
+    <form novalidate ng-submit="signin()">
+        <div class="form-floating input-group-sm">
+            <label for="userUsername">Username</label>
+            <input type="text" class="form-control" id="userUsername" placeholder="" ng-model="signinUser.username">
+        </div>
+        <p></p>
+        <div class="form-floating input-group-sm">
+            <label for="userEmail">Email</label>
+            <input type="text" class="form-control" id="userEmail" placeholder="" ng-model="signinUser.email">
+        </div>
+        <p></p>
+        <div class="form-floating input-group-sm">
+            <label for="userPass">Password</label>
+            <input type="password" class="form-control" id="userPass" placeholder="" ng-model="signinUser.password">
+        </div>
+        <p></p>
+        <div class="form-floating input-group-sm">
+            <label for="userConfirmPass">Confirm Password</label>
+            <input type="password" class="form-control" id="userConfirmPass" placeholder="" ng-model="signinUser.confirmPassword">
+        </div>
+        <p></p>
+        <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Sign In</button>
+    </form>
+</div>

@@ -1,6 +1,8 @@
 package ru.geekbrains.gainanov.market.carts.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.gainanov.market.api.ProductDto;
 import ru.geekbrains.gainanov.market.carts.integrations.ProductServiceIntegration;
@@ -9,61 +11,48 @@ import ru.geekbrains.gainanov.market.carts.models.Cart;
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
     private final ProductServiceIntegration productServiceIntegration;
-    private Map<String, Cart> tempCarts;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    @PostConstruct
-    public void init() {
-        tempCarts = new HashMap<>();
-        tempCarts.put("unified", new Cart());
-    }
+    @Value("${cart-service.cart-prefix")
+    private String cartPrefix;
 
-    public Cart getCurrentCart(String username) {
-        if (username != null) {
-            if (!tempCarts.containsKey(username)) {
-                tempCarts.put(username, new Cart());
-            }
-            return tempCarts.get(username);
+    public Cart getCurrentCart(String uuid) {
+        String targetUuid = cartPrefix + uuid;
+        if (!redisTemplate.hasKey(targetUuid)) {
+            redisTemplate.opsForValue().set(targetUuid, new Cart());
         }
-        return tempCarts.get("unified");
+        return (Cart) redisTemplate.opsForValue().get(targetUuid);
     }
 
-    public void addProduct(String username, Long productId) {
+    public void addProduct(String uuid, Long productId) {
         ProductDto product = productServiceIntegration.getProductById(productId);
-        if (username != null) {
-            tempCarts.get(username).addProduct(product);
-            return;
-        }
-        tempCarts.get("unified").addProduct(product);
+        execute(uuid, cart -> cart.addProduct(product));
     }
 
-    public void removeProduct(String username, Long productId) {
+    public void removeProduct(String uuid, Long productId) {
         ProductDto product = productServiceIntegration.getProductById(productId);
-        if (username != null) {
-            tempCarts.get(username).removeProduct(product);
-            return;
-        }
-        tempCarts.get("unified").removeProduct(product);
+        execute(uuid, cart -> cart.removeProduct(product));
     }
 
-    public void removeAll(String username) {
-        if (username != null) {
-            tempCarts.get(username).removeAll();
-            return;
-        }
-        tempCarts.get("unified").removeAll();
+    public void removeAll(String uuid) {
+        execute(uuid, Cart::removeAll);
     }
 
-    public void removeLine(String username, Long productId) {
-        if (username != null) {
-            tempCarts.get(username).removeLine(productId);
-            return;
-        }
-        tempCarts.get("unified").removeLine(productId);
+    public void removeLine(String uuid, Long productId) {
+        execute(uuid, cart -> cart.removeLine(productId));
+    }
+
+    private void execute(String uuid, Consumer<Cart> operation) {
+        String targetUuid = cartPrefix + uuid;
+        Cart cart = getCurrentCart(uuid);
+        operation.accept(cart);
+        redisTemplate.opsForValue().set(targetUuid, cart);
     }
 
 }

@@ -18,6 +18,14 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
+            .when('/orders', {
+                templateUrl: 'orders/orders.html',
+                controller: 'ordersController'
+            })
+            .when('/signin', {
+                templateUrl: 'signin/signin.html',
+                controller: 'signinController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -39,6 +47,13 @@
 
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.winterMarketUser.token;
         }
+
+        if (!$localStorage.gainanovMarketGuestCartId) {
+            $http.get('http://localhost:5555/cart/api/v1/cart/generate-uuid')
+                .then(function successCallback(response) {
+                    $localStorage.gainanovMarketGuestCartId = response.data.value;
+                })
+        }
     }
 })();
 
@@ -59,7 +74,7 @@ angular.module('market').controller('indexController', function ($rootScope, $sc
             });
     };
 
-    $scope.tryToLogout = function () {
+    $rootScope.tryToLogout = function () {
         $scope.clearUser();
         $scope.user = null;
         $location.path('/');
@@ -70,7 +85,7 @@ angular.module('market').controller('indexController', function ($rootScope, $sc
         $http.defaults.headers.common.Authorization = '';
     };
 
-    $scope.isUserLoggedIn = function () {
+    $rootScope.isUserLoggedIn = function () {
         if ($localStorage.gainanovMarketUser) {
             return true;
         } else {
@@ -84,14 +99,4 @@ angular.module('market').controller('indexController', function ($rootScope, $sc
                 alert(response.data.value)
             });
     };
-
-
-    $scope.getUserOrders = function () {
-        $http.get('http://localhost:5555/core/api/v1/orders/')
-            .then(function (response) {
-                $scope.userOrders = response.data
-            });
-    };
-
-
 });

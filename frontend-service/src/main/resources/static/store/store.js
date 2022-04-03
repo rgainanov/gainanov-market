@@ -57,9 +57,7 @@ angular.module('market').controller('storeController', function ($scope, $http, 
     }
 
     $scope.addToCart = function (productId) {
-        console.log(productId + ' added to cart')
-        $http.get(cartContextPath + 'api/v1/cart/add/' + productId).then(function (response) {
-            $scope.loadCart();
+        $http.get(cartContextPath + 'api/v1/cart/' + $localStorage.gainanovMarketGuestCartId + '/add/' + productId).then(function (response) {
         });
     }
 

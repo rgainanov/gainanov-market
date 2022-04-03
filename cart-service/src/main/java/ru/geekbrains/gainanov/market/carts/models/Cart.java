@@ -20,9 +20,9 @@ public class Cart {
         this.items = new ArrayList<>();
     }
 
-    public List<CartItem> getItems() {
-        return Collections.unmodifiableList(items);
-    }
+//    public List<CartItem> getItems() {
+//        return Collections.unmodifiableList(items);
+//    }
 
     public void addProduct(ProductDto product) {
         for (CartItem ci : items) {
