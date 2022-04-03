@@ -43,4 +43,20 @@
         </tr>
         </tbody>
     </table>
+    <div style="display: flex; justify-content: center;">
+        <nav aria-label="Pagination">
+            <ul class="pagination">
+                <li ng-class="ProductsPage.first ? 'page-item disabled' : 'page-item'">
+                    <a class="page-link" ng-click="loadProducts(ProductsPage.number)">Previous</a>
+                </li>
+                <li ng-class="ProductsPage.number == pageIndex -1 ? 'page-item active' : 'page-item'"
+                    ng-repeat="pageIndex in PaginationArray">
+                    <a class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</a>
+                </li>
+                <li ng-class="ProductsPage.last ? 'page-item disabled' : 'page-item'">
+                    <a class="page-link" ng-click="loadProducts(ProductsPage.number + 2)">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
