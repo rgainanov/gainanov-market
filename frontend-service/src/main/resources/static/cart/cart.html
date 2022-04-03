@@ -1,0 +1,57 @@
+<div>
+    <p></p>
+    <h3>Cart</h3>
+    <p></p>
+
+    <div style="display: flex; flex: 1; width: 100%;">
+        <div ng-show="cart.items.length > 0"
+             style="display: flex; width: 100%; justify-content: flex-end; margin: auto;">
+            <button type="button" class="btn btn-danger" ng-click="clearCart()">
+                Clear Cart
+            </button>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <tr>
+            <td>Title</td>
+            <td>Quantity</td>
+            <td>Price</td>
+            <td></td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="ci in cart.items">
+            <td>{{ci.productTitle}}</td>
+            <td>
+
+                <button type="button" class="btn btn-warning" ng-click="removeFromCart(ci.productId)">-</button>
+                {{ci.quantity}}
+                <button ng-controller="storeController" type="button" class="btn btn-primary"
+                        ng-click="addToCart(ci.productId)">+
+                </button>
+            </td>
+            <td>{{ci.price}}</td>
+            <td>
+                <button type="button" class="btn btn-dark" ng-click="removeProductLine(ci.productId)">Remove Product
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td></td>
+            <td>{{cart.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <form ng-submit="createOrder()" class="align-middle" ng-show="isUserLoggedIn() && cart.items.length > 0">
+        <div class="input-group input-group-sm" style="padding: 4px;">
+            <input ng-model="order.address" type="text" id="navOrderAddress" class="form-control"
+                   placeholder="Enter Address" aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+            <input ng-model="order.phone" type="text" id="navOrderPhone" class="form-control" placeholder="Enter Phone"
+                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+            <button id="navOrderSubmit" class="btn btn-outline-warning btn-sm" type="submit"
+                    style="margin-left: 10px;">
+                Create Order
+            </button>
+        </div>
+    </form>
+</div>

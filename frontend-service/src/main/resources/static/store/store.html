@@ -1,0 +1,46 @@
+<div>
+    <p></p>
+    <h3>Product Catalog</h3>
+    <p></p>
+
+    <div>
+        <form ng-submit="loadProducts()" class="align-middle">
+            <div style="display: flex; padding-bottom: 40px; padding-top: 20px;">
+                <div style="display: flex; flex-direction: column; width: 100%;">
+                    <input ng-model="productsfilter.title" type="text" id="productFilterTitle" class="form-control"
+                           placeholder="Enter Title or Leave blank" aria-describedby="inputGroup-sizing-sm">
+                    <div style="display: flex">
+                        <input ng-model="productsfilter.minPrice" type="text" id="productFilterMinPrice"
+                               class="form-control"
+                               placeholder="Min Price" aria-describedby="inputGroup-sizing-sm">
+                        <input ng-model="productsfilter.maxPrice" type="text" id="productFilterMaxPrice"
+                               class="form-control"
+                               placeholder="Max Price" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+                <button id="productFilterSubmit" class="btn btn-outline-warning btn-sm" type="submit"
+                        style="margin-left: 10px;">
+                    Filter
+                </button>
+            </div>
+        </form>
+    </div>
+    <table class="table table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Title</td>
+            <td>Price</td>
+            <td></td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in ProductsPage.content">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="addToCart(p.id)">Add To Cart</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,6 +1,7 @@
 package ru.geekbrains.gainanov.market.core.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.gainanov.market.api.ProductDto;
@@ -10,8 +11,6 @@ import ru.geekbrains.gainanov.market.core.entities.Product;
 import ru.geekbrains.gainanov.market.core.repositories.specifications.ProductSpecifications;
 import ru.geekbrains.gainanov.market.core.services.ProductService;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -21,10 +20,16 @@ public class ProductController {
     private final ProductConverter productConverter;
 
     @GetMapping
-    public List<ProductDto> findAll(
-            @RequestParam MultiValueMap<String, String> params
-            ) {
-        return productService.findAll(ProductSpecifications.build(params)).stream().map(productConverter::entityToDto).collect(Collectors.toList());
+    public Page<ProductDto> findAll(
+            @RequestParam MultiValueMap<String, String> params,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "1") int size
+    ) {
+
+        if (page < 1) {
+            page = 1;
+        }
+        return productService.findAll(ProductSpecifications.build(params), page, size);
     }
 
     @GetMapping("/{id}")

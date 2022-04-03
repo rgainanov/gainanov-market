@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html ng-app="app">
+<html ng-app="market">
 
 <head>
     <meta charset="utf-8">
@@ -10,7 +10,9 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
-    <script src="index.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
+
+
 </head>
 
 <body>
@@ -20,7 +22,13 @@
         <div id="navbarNav" class="collapse navbar-collapse">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Gainanov Market</a>
+                    <a href="#!/" class="nav-link">Gainanov Market</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#!/store" class="nav-link">Product Catalog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#!/cart" class="nav-link">Cart</a>
                 </li>
                 <li class="nav-item" ng-show="!isUserLoggedIn()">
                     <form ng-submit="tryToAuth()" class="align-middle">
@@ -49,101 +57,13 @@
         </div>
     </nav>
 
-    <h1>Gainanov Market</h1>
+    <ng-view></ng-view>
 
-    <h3>Product List</h3>
-    <div>
-        <form ng-submit="loadProducts()" class="align-middle">
-            <div style="display: flex; padding-bottom: 40px; padding-top: 20px;">
-                <div style="display: flex; flex-direction: column; width: 100%;">
-                    <input ng-model="productsfilter.title" type="text" id="productFilterTitle" class="form-control"
-                           placeholder="Enter Title or Leave blank" aria-describedby="inputGroup-sizing-sm">
-                    <div style="display: flex">
-                        <input ng-model="productsfilter.minPrice" type="text" id="productFilterMinPrice"
-                               class="form-control"
-                               placeholder="Min Price" aria-describedby="inputGroup-sizing-sm">
-                        <input ng-model="productsfilter.maxPrice" type="text" id="productFilterMaxPrice"
-                               class="form-control"
-                               placeholder="Max Price" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-                </div>
-                <button id="productFilterSubmit" class="btn btn-outline-warning btn-sm" type="submit"
-                        style="margin-left: 10px;">
-                    Filter
-                </button>
-            </div>
-        </form>
-    </div>
-    <table class="table table-hover">
-        <tr>
-            <td>ID</td>
-            <td>Title</td>
-            <td>Price</td>
-            <td></td>
-        </tr>
-        <tbody>
-        <tr ng-repeat="p in productsList">
-            <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
-            <td>{{p.price}}</td>
-            <td>
-                <button type="button" class="btn btn-primary" ng-click="addToCart(p.id)">Add To Cart</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <p></p>
+    <script src="index.js"></script>
+    <script src="store/store.js"></script>
+    <script src="cart/cart.js"></script>
+    <script src="welcome/welcome.js"></script>
 
-    <div style="display: flex; flex: 1; width: 100%;">
-        <h1>Cart</h1>
-        <div ng-show="cart.items.length > 0"
-             style="display: flex; width: 100%; justify-content: flex-end; margin: auto;">
-            <button type="button" class="btn btn-danger" ng-click="clearCart()">
-                Clear Cart
-            </button>
-        </div>
-    </div>
-    <table class="table table-hover">
-        <tr>
-            <td>Title</td>
-            <td>Quantity</td>
-            <td>Price</td>
-            <td></td>
-        </tr>
-        <tbody>
-        <tr ng-repeat="ci in cart.items">
-            <td>{{ci.productTitle}}</td>
-            <td>
-                <button type="button" class="btn btn-warning" ng-click="removeFromCart(ci.productId)">-</button>
-                {{ci.quantity}}
-                <button type="button" class="btn btn-primary" ng-click="addToCart(ci.productId)">+</button>
-            </td>
-            <td>{{ci.price}}</td>
-            <td>
-                <button type="button" class="btn btn-dark" ng-click="removeProductLine(ci.productId)">Remove Product
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td>Total</td>
-            <td></td>
-            <td>{{cart.totalPrice}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <form ng-submit="createOrder()" class="align-middle" ng-show="isUserLoggedIn() && cart.items.length > 0">
-        <div class="input-group input-group-sm" style="padding: 4px;">
-            <input ng-model="order.address" type="text" id="navOrderAddress" class="form-control"
-                   placeholder="Enter Address" aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
-            <input ng-model="order.phone" type="text" id="navOrderPhone" class="form-control" placeholder="Enter Phone"
-                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
-            <button id="navOrderSubmit" class="btn btn-outline-warning btn-sm" type="submit"
-                    style="margin-left: 10px;">
-                Create Order
-            </button>
-        </div>
-    </form>
-    {{userOrders}}
 </div>
 </body>
 </html>
