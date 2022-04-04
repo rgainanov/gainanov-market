@@ -32,8 +32,15 @@ public class Cart {
 
     }
 
-    public void addCartItem(CartItem ci) {
-        items.add(ci);
+    public void addCartItem(CartItem cartItem) {
+        for (CartItem ci : items) {
+            if (ci.getProductId().equals(cartItem.getProductId())) {
+                ci.changeQuantity(cartItem.getQuantity());
+                recalculate();
+                return;
+            }
+        }
+        items.add(cartItem);
         recalculate();
     }
 

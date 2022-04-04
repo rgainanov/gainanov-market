@@ -68,11 +68,17 @@ angular.module('market').controller('indexController', function ($rootScope, $sc
                     $scope.user.username = null;
                     $scope.user.password = null;
 
+                    $scope.mergeCarts();
                     $location.path('/');
                 }
             }, function errorCallback(response) {
             });
     };
+
+    $scope.mergeCarts = function () {
+        $http.get('http://localhost:5555/cart/api/v1/cart/' + $localStorage.gainanovMarketGuestCartId + '/merge-carts').then(function (response) {
+        });
+    }
 
     $rootScope.tryToLogout = function () {
         $scope.clearUser();

@@ -32,12 +32,14 @@ public class CartService {
         Cart userCart = getCurrentCart(username);
         Cart unownedCart = getCurrentCart(uuid);
 
-        for (CartItem ci : unownedCart.getItems()) {
-            userCart.addCartItem(ci);
-        }
+        if (unownedCart.getItems().size() > 0) {
+            for (CartItem ci : unownedCart.getItems()) {
+                userCart.addCartItem(ci);
+            }
 
-        removeAll(uuid);
-        redisTemplate.opsForValue().set(cartPrefix + username, userCart);
+            removeAll(uuid);
+            redisTemplate.opsForValue().set(cartPrefix + username, userCart);
+        }
     }
 
     public void addProduct(String uuid, Long productId) {

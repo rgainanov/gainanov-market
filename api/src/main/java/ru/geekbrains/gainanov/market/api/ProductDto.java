@@ -1,11 +1,21 @@
 package ru.geekbrains.gainanov.market.api;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.math.BigDecimal;
 
+@Schema(description = "Product model")
 public class ProductDto {
+    @Schema(description = "Product ID", required = true, example = "1")
     private Long id;
+
+    @Schema(description = "Product Title", maxLength = 255, minLength = 3, required = true, example = "Milk")
     private String title;
+
+    @Schema(description = "Product Price", required = true, example = "1.55")
     private BigDecimal price;
+
+    @Schema(description = "Product Category", required = true, example = "Food")
     private String categoryTitle;
 
     public ProductDto() {
