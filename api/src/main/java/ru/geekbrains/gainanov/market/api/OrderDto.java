@@ -1,5 +1,7 @@
 package ru.geekbrains.gainanov.market.api;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.math.BigDecimal;
 import java.util.List;
 

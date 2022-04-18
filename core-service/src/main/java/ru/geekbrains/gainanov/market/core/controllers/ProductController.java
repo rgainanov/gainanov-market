@@ -88,6 +88,14 @@ public class ProductController {
 
     }
 
+    @Operation(
+            summary = "Delete Product by ID",
+            responses = {
+                    @ApiResponse(
+                            description = "Success", responseCode = "200"
+                    )
+            }
+    )
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         productService.deleteById(id);
